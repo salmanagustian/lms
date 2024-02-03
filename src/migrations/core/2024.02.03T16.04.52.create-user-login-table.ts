@@ -1,7 +1,10 @@
 import { Migration } from '@config/database/migration.provider';
+import { UserLogin } from '@models/UserLogin';
+import { hash } from 'bcrypt';
 import { DataType } from 'sequelize-typescript';
 
 export const databasePath = __dirname;
+const PASSWORD_SALT_ROUND = 10;
 
 export const up: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
@@ -25,9 +28,20 @@ export const up: Migration = async ({ context: queryInterface }) => {
         allowNull: false,
         defaultValue: false,
       },
+      is_active: {
+        type: DataType.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
       created_at: DataType.DATE,
       updated_at: DataType.DATE,
       deleted_at: DataType.DATE,
+    }, { transaction });
+
+    const password = await hash('password', PASSWORD_SALT_ROUND);
+    await UserLogin.create({
+      email: 'salmanagustian@gmail.com',
+      password
     }, { transaction });
   });
 };
