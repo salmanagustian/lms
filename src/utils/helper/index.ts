@@ -1,4 +1,6 @@
 import { ClassTransformOptions, plainToInstance } from "class-transformer";
+import { Transaction } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 
 export const circularToJSON = (circular: unknown) => JSON.parse(JSON.stringify(circular));
 
@@ -32,4 +34,16 @@ export function transformer<T, V>(
     ...options,
   });
   return result as unknown;
+}
+
+/**
+ * Resource for handling get format transaction id
+ * @param earnedPointCode string
+ * @param transaction Transaction
+ * @returns string
+ */
+export async function getFmtTransactionId(earnedPointCode: string, sequelize: Sequelize, transaction: Transaction): Promise<string> {
+  const [res, _] = await sequelize.query(`select format_transaction_id_fn('${earnedPointCode}') as earnedtrscode`, { transaction });
+  const earnedTrsCode = JSON.parse(JSON.stringify(res?.[0]))?.earnedtrscode as string;
+  return earnedTrsCode;
 }

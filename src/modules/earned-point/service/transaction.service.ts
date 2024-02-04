@@ -6,26 +6,16 @@ import { DateTime } from "luxon";
 import { Loyalty } from "@models/Loyalty";
 import { Op, Transaction } from "sequelize";
 import { EEarnedPointCode } from "@utils/enum";
-import { Transaction as MTransaction } from "@models/Transaction";
-import { TransactionItem } from "@models/TransactionItem";
+import { MemberTransaction } from "@models/MemberTransaction";
+import { MemberTransactionItem } from "@models/MemberTransactionItem";
+import { getFmtTransactionId } from "@utils/helper";
 
 @Injectable()
 export class TransactionService {
   constructor(private readonly sequelize: Sequelize) {}
 
-  /**
-   * Resource for handling get format transaction id
-   * @param earnedPointCode string
-   * @param transaction Transaction
-   * @returns string
-   */
-   private async getFmtTransactionId(earnedPointCode: string, transaction: Transaction): Promise<string> {
-    const [res, _] = await this.sequelize.query(`select format_transaction_id_fn('${earnedPointCode}') as earnedtrscode`, { transaction });
-    const earnedTrsCode = JSON.parse(JSON.stringify(res?.[0]))?.earnedtrscode as string;
-    return earnedTrsCode;
-  }
 
-  async create({ items }: ICreateTransactionDTO, { userId }: ILoggedUser): Promise<MTransaction> {
+  async create({ items }: ICreateTransactionDTO, { userId }: ILoggedUser): Promise<MemberTransaction> {
     const createTransaction = await this.sequelize.transaction(async (transaction) => {
       const currentDate = DateTime.now().toFormat('yyyy-MM-dd');
       const availableLoyalty = await Loyalty.scope('active').findOne({
@@ -39,7 +29,7 @@ export class TransactionService {
       });
       
       // handle get format transaction id
-      const transactionId = await this.getFmtTransactionId(EEarnedPointCode.TRANSACTIONAL, transaction);
+      const transactionId = await getFmtTransactionId(EEarnedPointCode.TRANSACTIONAL, this.sequelize, transaction);
 
       // handle transaction items creations
       let amountTotal = items.reduce((res, current) => {
@@ -50,7 +40,7 @@ export class TransactionService {
      
 
       // handle create transaction data
-      const transactionData = await MTransaction.create({
+      const transactionData = await MemberTransaction.create({
         transactionId,
         loyaltyId: availableLoyalty.id,
         memberId: userId,
@@ -66,7 +56,7 @@ export class TransactionService {
         return res;
       }, [] as Array<{ transactionId: number, name: string, qty: number, price: number, subTotal: number }>)
 
-      await TransactionItem.bulkCreate(transactionItems,  { transaction });
+      await MemberTransactionItem.bulkCreate(transactionItems,  { transaction });
 
 
       return transactionData;

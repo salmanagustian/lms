@@ -5,7 +5,7 @@ export const databasePath = __dirname;
 
 export const up: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
-    await queryInterface.createTable('member_referrals', {
+    await queryInterface.createTable('member_activities', {
       id: {
         type: DataType.INTEGER,
         primaryKey: true,
@@ -32,8 +32,8 @@ export const up: Migration = async ({ context: queryInterface }) => {
         allowNull: false,
         comment: 'transaction id for referenceing an invoice number',
       },
-      persons: {
-        type: DataType.JSONB,
+      activity_name: {
+        type: DataType.STRING(255),
         allowNull: false,
       },
       transaction_date: {
@@ -45,12 +45,12 @@ export const up: Migration = async ({ context: queryInterface }) => {
       deleted_at: DataType.DATE,
     }, { transaction });
 
-    await queryInterface.addIndex('member_referrals', ['member_id'], { where: { deleted_at: null }, transaction });
+    await queryInterface.addIndex('member_activities', ['member_id'], { where: { deleted_at: null }, transaction });
   });
 };
 export const down: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
-    await queryInterface.removeIndex('member_referrals', ['member_id'], { where: { deleted_at: null }, transaction });
-    await queryInterface.dropTable('member_referrals', { transaction });
+    await queryInterface.removeIndex('member_activities', ['member_id'], { where: { deleted_at: null }, transaction });
+    await queryInterface.dropTable('member_activities', { transaction });
   });
 };
