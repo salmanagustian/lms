@@ -83,5 +83,5 @@ export class Member extends Model<IModel, IModelCreate> implements IModel {
   user: UserLogin;
 
   @HasMany(() => MemberPointHistory)
-  pointHistories: MemberPointHistory;
+  declare pointHistories: MemberPointHistory;
 }

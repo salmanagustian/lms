@@ -54,5 +54,5 @@ export class Loyalty extends Model<IModel, IModelCreate> implements IModel {
   isActive: boolean;
 
   @BelongsToMany(() => Tier, () => LoyaltyTier)
-  tiers: Tier[];
+  declare tiers: Tier[];
 }

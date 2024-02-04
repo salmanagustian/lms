@@ -8,7 +8,7 @@ export class ListTierQuery {
   size: number;
 
   @IsOptional()
-  search: string;
+  search?: string;
 }
 
 export class CreateTierRequest {

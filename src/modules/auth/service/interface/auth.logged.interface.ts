@@ -5,5 +5,6 @@ export interface ILoginPayload {
 
 export interface ILoggedUser {
   userId: number;
+  memberId?: number;
   email: string;
 }

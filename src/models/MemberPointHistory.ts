@@ -52,5 +52,5 @@ export class MemberPointHistory extends Model<IModel, IModelCreate> implements I
   point: number;
   
   @BelongsTo(() => Member)
-  member: Member;
+  declare member: Member;
 }

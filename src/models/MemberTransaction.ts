@@ -54,5 +54,5 @@ export class MemberTransaction extends Model<IModel, IModelCreate> implements IM
   transactionDate: Date;
 
   @HasMany(() => MemberTransactionItem)
-  items: MemberTransactionItem;
+  declare items: MemberTransactionItem;
 }

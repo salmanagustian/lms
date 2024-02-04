@@ -1,5 +1,6 @@
 import { IUnfilledAtt, Optional } from "@utils/base-class/base.interface";
-import { AllowNull, Column, Default, Model, Scopes, Table } from "sequelize-typescript";
+import { AllowNull, Column, Default, HasOne, Model, Scopes, Table } from "sequelize-typescript";
+import { Member } from "./Member";
 
 export interface INullableAttr extends IUnfilledAtt {
   isActive: boolean,
@@ -45,4 +46,7 @@ export class UserLogin extends Model<IModel, IModelCreate> implements IModel {
   @Default(true)
   @Column
   declare isActive: boolean;
+
+  @HasOne(() => Member)
+  declare member: Member;
 }

@@ -23,18 +23,25 @@ export class AuthJwtCmsStrategy extends PassportStrategy(Strategy, 'auth') {
   }
 
   async validate(payload: ILoginPayload): Promise<ILoggedUser> {
-    console.log('PAYLOAD: \n', payload);
     const userLogin = await UserLogin.scope('active').findOne({
       attributes: ['id', 'email'],
       where: {
         id: payload.userId,
         email: payload.email,
       },
+      include: [
+        {
+          association: 'member',
+          attributes: ['id'],
+          required: true,
+        },
+      ],
       rejectOnEmpty: new UnauthorizedException(),
     });
 
     return {
-      userId: userLogin.id,
+      userId: userLogin.member.id,
+      memberId: userLogin.member.id,
       email: userLogin.email,
     };
   }
