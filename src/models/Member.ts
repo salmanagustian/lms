@@ -48,7 +48,6 @@ export class Member extends Model<IModel, IModelCreate> implements IModel {
   @Column
   phoneNumber: string;
   
-  @AllowNull(false)
   @Column
   address: string;
 

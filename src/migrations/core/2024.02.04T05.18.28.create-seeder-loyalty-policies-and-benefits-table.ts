@@ -13,7 +13,7 @@ export const up: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
     const currentDate = DateTime.now().toFormat('yyyy-MM-dd');
     console.log('CURRENT DATE: \n', currentDate);
-    const loyalty = await Loyalty.findOne({
+    const loyalty = await Loyalty.scope('active').findOne({
       attributes: ['id', 'name'],
       where: {
         endDate: {
