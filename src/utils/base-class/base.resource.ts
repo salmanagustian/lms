@@ -1,7 +1,7 @@
 import * as JsonAPISerializer from 'json-api-serializer';
 
 export const resourceNames = [
-  'tier', 'sign-in'
+  'tier', 'sign-in', 'membership', 'transaction', 'community', 'report'
 ] as const;
 
 

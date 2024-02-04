@@ -1,12 +1,11 @@
 import { Migration } from '@config/database/migration.provider';
-import { Tier } from '@models/Tier';
 import { DataType } from 'sequelize-typescript';
 
 export const databasePath = __dirname;
 
 export const up: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
-    await queryInterface.createTable('tiers', {
+    await queryInterface.createTable('loyalties', {
       id: {
         type: DataType.INTEGER,
         primaryKey: true,
@@ -16,31 +15,30 @@ export const up: Migration = async ({ context: queryInterface }) => {
         type: DataType.STRING(100),
         allowNull: false,
       },
-      min_point: {
-        type: DataType.SMALLINT,
+      start_date: {
+        type: DataType.DATEONLY,
         allowNull: false,
-        defaultValue: 0,
       },
-      max_point: {
-        type: DataType.SMALLINT,
+      end_date: {
+        type: DataType.DATEONLY,
         allowNull: false,
-        defaultValue: 0,
+      },
+      is_active: {
+        type: DataType.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
       created_at: DataType.DATE,
       updated_at: DataType.DATE,
       deleted_at: DataType.DATE,
     }, { transaction });
 
-    await Tier.bulkCreate([
-      {name: 'NEWBIE', minPoint: 0, maxPoint: 250},
-      {name: 'BESTIE', minPoint: 250,  maxPoint: 500},
-      {name: 'ROYAL', minPoint: 500,  maxPoint: 750},
-      {name: 'CRAZY RICH', minPoint: 750,  maxPoint: 1000},
-    ], { transaction });
+    await queryInterface.addIndex('loyalties', ['is_active'], { where: { deleted_at: null }, transaction });
   });
 };
 export const down: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
-    await queryInterface.dropTable('tiers', { transaction });
+    await queryInterface.removeIndex('loyalties', ['is_active'], { where: { deleted_at: null }, transaction });
+    await queryInterface.dropTable('loyalties', { transaction });
   });
 };
