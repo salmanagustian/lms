@@ -5,9 +5,6 @@ import { ILoginPayload } from "./interface/auth.logged.interface";
 import { AuthJwtService } from "modules/auth-jwt/service/auth-jwt.service";
 import { AuthRequest } from "../controller/request/auth.request";
 
-type ISignInDTO = Pick<IModel, 'email' | 'password'>
-const AUDIENCE_APP = 'lms';
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -25,12 +22,12 @@ export class AuthService {
     if (!isPasswordSame) throw new UnauthorizedException();
 
     const loginPayload: ILoginPayload = {
-      userId: 2,
+      userId: userLogin.id,
       email: userLogin.email,
     };
 
     return this.jwtService.createToken(
-      { payload: loginPayload, audience: AUDIENCE_APP }, 
+      { payload: loginPayload, audience: 'lms' }, 
       { expiresIn: 1, expirationType: 'hour'}
     );
   }

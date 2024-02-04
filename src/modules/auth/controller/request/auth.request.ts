@@ -11,6 +11,6 @@ export class AuthRequest {
   @ApiProperty({ default: 'string' })
   @IsNotEmpty()
   @IsString()
-  @Matches(/^(?=.*[a-zA-Z])(?=.*[\d])[\w\W]{8,32}/, { message: 'Password must be at least 8 characters, including alphabets and numbers' })
+  @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/, { message: 'Password must be at least 8 characters, including one uppercase, lowercase letter. And at least have one number and one special character' })
   password: string;
 }

@@ -1,4 +1,9 @@
 export interface ILoginPayload {
-  userId: number
+  userId: number;
   email: string
+}
+
+export interface ILoggedUser {
+  userId: number;
+  email: string;
 }

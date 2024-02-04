@@ -1,52 +1,38 @@
 import { Migration } from '@config/database/migration.provider';
-import { UserLogin } from '@models/UserLogin';
-import { hash } from 'bcrypt';
 import { DataType } from 'sequelize-typescript';
 
 export const databasePath = __dirname;
-const PASSWORD_SALT_ROUND = 10;
 
 export const up: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
-    await queryInterface.createTable('user_login', {
+    await queryInterface.createTable('tiers', {
       id: {
         type: DataType.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      email: {
-        type: DataType.STRING(50),
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: DataType.STRING,
+      name: {
+        type: DataType.STRING(100),
         allowNull: false,
       },
-      remember_me: {
-        type: DataType.BOOLEAN,
+      min_point: {
+        type: DataType.SMALLINT,
         allowNull: false,
-        defaultValue: false,
+        defaultValue: 0,
       },
-      is_active: {
-        type: DataType.BOOLEAN,
+      max_point: {
+        type: DataType.SMALLINT,
         allowNull: false,
-        defaultValue: true,
+        defaultValue: 0,
       },
       created_at: DataType.DATE,
       updated_at: DataType.DATE,
       deleted_at: DataType.DATE,
     }, { transaction });
-
-    const password = await hash('Password@123', PASSWORD_SALT_ROUND);
-    await UserLogin.create({
-      email: 'salmanagustian@gmail.com',
-      password
-    }, { transaction });
   });
 };
 export const down: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
-    await queryInterface.dropTable('user_login', { transaction });
+    await queryInterface.dropTable('tiers', { transaction });
   });
 };
