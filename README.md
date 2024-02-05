@@ -9,6 +9,7 @@ Loyalti Management System API
 - ORM [Sequelize-Typescript](https://www.npmjs.com/package/sequelize-typescript) = v2.1.3
 - Base ORM [Sequelize](https://sequelize.org/master/) = 6
 - Open API [Swagger](https://swagger.io/)
+- DB [PostgreSQL](https://www.postgresql.org/)
 
 ## Install
 
