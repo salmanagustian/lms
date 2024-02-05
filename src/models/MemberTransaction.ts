@@ -33,25 +33,25 @@ export class MemberTransaction extends Model<IModel, IModelCreate> implements IM
   @ForeignKey(() => Loyalty)
   @AllowNull(false)
   @Column
-  loyaltyId: number;
+  declare loyaltyId: number;
 
   @ForeignKey(() => Member)
   @AllowNull(false)
   @Column
-  memberId: number;
+  declare memberId: number;
 
   @AllowNull(false)
   @Column
-  transactionId: string;
+  declare transactionId: string;
 
   @AllowNull(false)
   @Default(0)
   @Column
-  amount: number;
+  declare amount: number;
   
   @AllowNull(false)
   @Column
-  transactionDate: Date;
+  declare transactionDate: Date;
 
   @HasMany(() => MemberTransactionItem)
   declare items: MemberTransactionItem;

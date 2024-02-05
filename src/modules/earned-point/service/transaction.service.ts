@@ -36,12 +36,12 @@ export class TransactionService {
         LoyaltyPolicy.findOne({
           attributes: ['id', 'category', 'config'],
           where: { loyaltyId: availableLoyalty.id, category: EEarnedPoint.TRANSACTIONAL },
-          rejectOnEmpty: new NotFoundException(`Mohon maaf, pengaturan loyalty ${availableLoyalty.name} belum tersedia`),
+          rejectOnEmpty: new NotFoundException(`Mohon maaf, pengaturan loyalty policies ${availableLoyalty.name} belum tersedia`),
         }).then((r) => circularToJSON(r)),
         LoyaltyBenefit.findOne({
           attributes: ['id', 'category', 'config'],
           where: { loyaltyId: availableLoyalty.id, category: EEarnedPoint.TRANSACTIONAL },
-          rejectOnEmpty: new NotFoundException(`Mohon maaf, pengaturan loyalty ${availableLoyalty.name} belum tersedia`),
+          rejectOnEmpty: new NotFoundException(`Mohon maaf, pengaturan loyalty benefit ${availableLoyalty.name} belum tersedia`),
         }).then((r) => circularToJSON(r)),
         MemberTransaction.findOne({
           attributes: ['id'],
@@ -119,6 +119,7 @@ export class TransactionService {
       // console.log("TRANSACTION DATA: \n", transactionData);
       const memberPointHistory: ICreateMemberPointHistoryDTO = {
         memberId: userId,
+        loyaltyId: availableLoyalty.id,
         transactionId: transactionData?.dataValues?.transactionId,
         transactionDate: transactionData?.dataValues?.transactionDate,
         type: EHistoryPointType.EARNED,

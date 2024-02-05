@@ -31,13 +31,13 @@ export class LoyaltyPolicy extends Model<IModel, IModelCreate> implements IModel
   @ForeignKey(() => Loyalty)
   @AllowNull(false)
   @Column
-  loyaltyId: number;
+  declare loyaltyId: number;
 
   @AllowNull(false)
   @Column
-  category: EEarnedPoint;
+  declare category: EEarnedPoint;
 
   @AllowNull(false)
   @Column({ type: DataType.JSONB })
-  config: any;
+  declare config: any;
 }

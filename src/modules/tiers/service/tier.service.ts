@@ -20,7 +20,7 @@ export class TierService {
             this.sequelize.where(
               this.sequelize.fn('lower', this.sequelize.col('name')),
               {
-                [Op.iLike]: `${query.search.trim()}`
+                [Op.iLike]: `%${query.search.trim()}%`
               }
             )
           ]

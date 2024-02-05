@@ -10,6 +10,7 @@
   },
   "scripts": {
     "migrate": "ts-node -r tsconfig-paths/register",
+    "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -49,7 +50,7 @@
     "qs": "^6.11.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "sequelize": "^6.36.0",
+    "sequelize": "^6.29.0",
     "sequelize-typescript": "^2.1.6",
     "umzug": "^3.6.1"
   },

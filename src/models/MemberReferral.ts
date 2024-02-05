@@ -33,22 +33,22 @@ export class MemberReferral extends Model<IModel, IModelCreate> implements IMode
   @ForeignKey(() => Loyalty)
   @AllowNull(false)
   @Column
-  loyaltyId: number;
+  declare loyaltyId: number;
 
   @ForeignKey(() => Member)
   @AllowNull(false)
   @Column
-  memberId: number;
+  declare memberId: number;
 
   @AllowNull(false)
   @Column
-  transactionId: string;
+  declare transactionId: string;
 
   @AllowNull(false)
   @Column({ type: DataType.JSONB })
-  persons: any;
+  declare persons: any;
   
   @AllowNull(false)
   @Column
-  transactionDate: Date;
+  declare transactionDate: Date;
 }

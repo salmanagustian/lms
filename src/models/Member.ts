@@ -2,6 +2,8 @@ import { IUnfilledAtt, Optional } from "@utils/base-class/base.interface";
 import { AllowNull, BelongsTo, BelongsToMany, Column, Default, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { UserLogin } from "./UserLogin";
 import { MemberPointHistory } from "./MemberPointHistory";
+import { Loyalty } from "./Loyalty";
+import { MemberTier } from "./MemberTier";
 
 export interface INullableAttr extends IUnfilledAtt {
   address: string;
@@ -38,50 +40,54 @@ export class Member extends Model<IModel, IModelCreate> implements IModel {
   @ForeignKey(() => UserLogin)
   @AllowNull(false)
   @Column
-  userId: number;
+  declare userId: number;
 
   @AllowNull(false)
   @Column
-  name: string;
+  declare name: string;
 
   @AllowNull(false)
   @Column
-  phoneNumber: string;
+  declare phoneNumber: string;
   
   @Column
-  address: string;
+  declare address: string;
 
   @AllowNull(false)
   @Column
-  joinDate: Date;
+  declare joinDate: Date;
 
   @AllowNull(false)
   @Column
-  birthDate: Date;
-
-  @AllowNull(false)
-  @Default(0)
-  @Column
-  earnedPoint: number;
+  declare birthDate: Date;
 
   @AllowNull(false)
   @Default(0)
   @Column
-  remainedPoint: number;
+  declare earnedPoint: number;
 
   @AllowNull(false)
   @Default(0)
   @Column
-  redeemedPoint: number;
+  declare remainedPoint: number;
+
+  @AllowNull(false)
+  @Default(0)
+  @Column
+  declare redeemedPoint: number;
   
   @AllowNull(false)
   @Default(true)
   @Column
-  isActive: boolean;
+  declare isActive: boolean;
 
   @BelongsTo(() => UserLogin)
-  user: UserLogin;
+  declare user: UserLogin;
 
   @HasMany(() => MemberPointHistory)
   declare pointHistories: MemberPointHistory;
+
+  
+  @BelongsToMany(() => Loyalty, () => MemberTier)
+  declare loyalty: Loyalty;
 }

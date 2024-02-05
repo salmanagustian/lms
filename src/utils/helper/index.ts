@@ -43,7 +43,7 @@ export function transformer<T, V>(
  * @returns string
  */
 export async function getFmtTransactionId(earnedPointCode: string, sequelize: Sequelize, transaction: Transaction): Promise<string> {
-  const [res, _] = await sequelize.query(`select format_transaction_id_fn('${earnedPointCode}') as earnedtrscode`, { transaction });
+  const [res, meta] = await sequelize.query(`select format_transaction_id_fn('${earnedPointCode}') as earnedtrscode`, { transaction });
   const earnedTrsCode = JSON.parse(JSON.stringify(res?.[0]))?.earnedtrscode as string;
   return earnedTrsCode;
 }

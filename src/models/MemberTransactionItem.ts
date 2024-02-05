@@ -31,24 +31,24 @@ export class MemberTransactionItem extends Model<IModel, IModelCreate> implement
   @ForeignKey(() => MemberTransaction)
   @AllowNull(false)
   @Column
-  transactionId: number;
+  declare transactionId: number;
 
   @AllowNull(false)
   @Column
-  name: string;
-
-  @AllowNull(false)
-  @Default(0)
-  @Column
-  price: number;
+  declare name: string;
 
   @AllowNull(false)
   @Default(0)
   @Column
-  qty: number;
+  declare price: number;
 
   @AllowNull(false)
   @Default(0)
   @Column
-  subTotal: number;
+  declare qty: number;
+
+  @AllowNull(false)
+  @Default(0)
+  @Column
+  declare subTotal: number;
 }

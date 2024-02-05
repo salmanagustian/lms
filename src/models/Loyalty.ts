@@ -1,7 +1,10 @@
 import { IUnfilledAtt, Optional } from "@utils/base-class/base.interface";
-import { AllowNull, BelongsToMany, Column, Default, Model, Scopes, Table } from "sequelize-typescript";
+import { AllowNull, BelongsToMany, Column, Default, HasMany, Model, Scopes, Table } from "sequelize-typescript";
 import { Tier } from "./Tier";
 import { LoyaltyTier } from "./LoyaltyTier";
+import { MemberPointHistory } from "./MemberPointHistory";
+import { Member } from "./Member";
+import { MemberTier } from "./MemberTier";
 
 export interface INullableAttr extends IUnfilledAtt {
   isActive: boolean;
@@ -38,21 +41,24 @@ export class Loyalty extends Model<IModel, IModelCreate> implements IModel {
 
   @AllowNull(false)
   @Column
-  name: string;
+  declare name: string;
 
   @AllowNull(false)
   @Column
-  startDate: string;
+  declare startDate: string;
 
   @AllowNull(false)
   @Column
-  endDate: string;
+  declare endDate: string;
 
   @AllowNull(false)
   @Default(true)
   @Column
-  isActive: boolean;
+  declare isActive: boolean;
 
   @BelongsToMany(() => Tier, () => LoyaltyTier)
   declare tiers: Tier[];
+
+  @BelongsToMany(() => Member, () => MemberTier)
+  declare members: Member;
 }
