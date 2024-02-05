@@ -31,6 +31,7 @@ $ pnpm run start:dev
 ```
 
 ## Description System & How to use
+- Untuk ERD bisa dilihat pada root folder dengan nama ERD-LMS.png
 - Untuk data yang menggunakan seeders antara lain:
   - Data Member
   - Data Loyalty
