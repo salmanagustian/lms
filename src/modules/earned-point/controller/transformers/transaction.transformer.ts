@@ -1,4 +1,5 @@
-import { Expose } from "class-transformer";
+import { Expose, Transform } from "class-transformer";
+import { DateTime } from "luxon";
 
 export class TransactionTransformer {
   @Expose()
@@ -11,5 +12,10 @@ export class TransactionTransformer {
   amount: number;
 
   @Expose()
+  @Transform(({ obj }) => {
+    if (obj?.transactionDate) {
+      return DateTime.fromISO(obj.transactionDate).toFormat('dd-MM-yyyy HH:mm:ss')
+    }
+  })
   transactionDate: Date;
 }

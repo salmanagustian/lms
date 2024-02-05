@@ -13,7 +13,7 @@ export class TierController {
 
   @Get()
   @ApiOperation({ summary: 'get list of tiers' })
-  @UseInterceptors(new ResponsePaginationInterceptor('sign-in'))
+  @UseInterceptors(new ResponsePaginationInterceptor('tier'))
   async getList(@Query() query: ListTierQuery) {
     const { count, rows } = await this.tierService.list(query);
 
@@ -31,7 +31,7 @@ export class TierController {
 
   @Get(':id')
   @ApiOperation({ summary: 'get detail tier data' })
-  @UseInterceptors(new ResponseInterceptor('sign-in'))
+  @UseInterceptors(new ResponseInterceptor('tier'))
   async findTier(@Param('id', ParseIntPipe) id: number) {
     const tier = await this.tierService.getOne(id);
     return transformer(TierTransformer, tier);
@@ -39,7 +39,7 @@ export class TierController {
 
   @Put(':id')
   @ApiOperation({ summary: 'update tier data' })
-  @UseInterceptors(new ResponseInterceptor('sign-in'))
+  @UseInterceptors(new ResponseInterceptor('tier'))
   async updateTier(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateTierRequest) {
     const tier = await this.tierService.update(id, body);
 

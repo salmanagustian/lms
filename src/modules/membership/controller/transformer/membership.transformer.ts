@@ -1,4 +1,5 @@
 import { Expose, Transform, Type } from "class-transformer";
+import { DateTime } from "luxon";
 
 export class UserTransformer {
   @Expose()
@@ -40,12 +41,22 @@ export class MembershipTransformer {
   phoneNumber: string;
   
   @Expose()
+  @Transform(({ obj }) => {
+    if (obj?.birthDate) {
+      return DateTime.fromISO(obj.birthDate).toFormat('dd-MM-yyyy')
+    }
+  })
   birthDate: Date;
 
   @Expose()
   address: string;
 
   @Expose()
+  @Transform(({ obj }) => {
+    if (obj?.joinDate) {
+      return DateTime.fromISO(obj.joinDate).toFormat('dd-MM-yyyy')
+    }
+  })
   joinDate: Date;
 
   @Expose()

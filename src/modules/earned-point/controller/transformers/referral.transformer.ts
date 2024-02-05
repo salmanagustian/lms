@@ -1,4 +1,5 @@
 import { Expose, Transform } from "class-transformer";
+import { DateTime } from "luxon";
 
 export class ReferralTransformer {
   @Expose()
@@ -12,5 +13,10 @@ export class ReferralTransformer {
   persons: any;
 
   @Expose()
+  @Transform(({ obj }) => {
+    if (obj?.transactionDate) {
+      return DateTime.fromISO(obj.transactionDate).toFormat('dd-MM-yyyy HH:mm:ss')
+    }
+  })
   transactionDate: Date;
 }

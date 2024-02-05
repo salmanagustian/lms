@@ -45,4 +45,25 @@ $ pnpm run start:dev
 - Untuk endpoint yang memerlukan authorization seperti endpoint API Earned Point dan Redeemed Point silahkan masukan token <br>
 dari response API sign-in ke dalam input tipe Authorize Bearer di Swagger.
 
+## Default config Loyalty Policy & Benefit
+- Pengaturan default loyalty policy adalah sebagai berikut
+  - Transactional
+    - minimal qty pembelian
+    - apakah pembelian pertama kali
+    - minimal total pembelian transaksi
+    - `RULES - 1`: first_purchase && total qty >= qty pembelian = earned point 
+    - `RULES - 2`: total pembelian transaksi > minimal pembelian transaksi = earned point
+  
+  - Community
+    - MGM: `RULES:`: total member invited * dengan fixed point di pengaturan loyalty benefit
+    - ACTIVITY: `RULES`: tidak ada, default earned point yang di dapat mengikuti pengaturan loyalty benefit
+
+- Pengaturan default loyalty benefit adalah sebagai berikut
+  - Transactional
+    - Percentage dan fixed point: Dapat berupa kelipatan
+    - `NOTES:` untuk nilai percentage yg di input ke database harus berupa nilai desimal, seperti `0.30` artinya 30% di ambil dari max point nilai fixed point. Jika nilai percentage null atau tidak di set, nilai kelipatan menggunakan fixed point
+  
+  - Community 
+    - fixed point: Dapat berupa kelipatan
+
 

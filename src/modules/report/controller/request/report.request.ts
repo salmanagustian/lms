@@ -7,11 +7,11 @@ export class ListEarnedPointRequest {
   @IsNotEmpty()
   size: number;
 
-  @IsOptional()
-  startDate?: string;
+  // @IsOptional()
+  // startDate?: string;
 
-  @IsOptional()
-  endDate?: string;
+  // @IsOptional()
+  // endDate?: string;
 
   @IsOptional()
   search?: string;
