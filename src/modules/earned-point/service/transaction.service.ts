@@ -119,7 +119,7 @@ export class TransactionService {
       // console.log("TRANSACTION DATA: \n", transactionData);
       const memberPointHistory: ICreateMemberPointHistoryDTO = {
         memberId: userId,
-        loyaltyId: availableLoyalty.id,
+        // loyaltyId: availableLoyalty.id,
         transactionId: transactionData?.dataValues?.transactionId,
         transactionDate: transactionData?.dataValues?.transactionDate,
         type: EHistoryPointType.EARNED,

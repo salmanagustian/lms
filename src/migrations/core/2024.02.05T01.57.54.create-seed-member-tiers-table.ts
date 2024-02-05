@@ -19,7 +19,7 @@ export const up: Migration = async ({ context: queryInterface }) => {
           loyaltyId: loyalty.id,
           memberId: member.id,
           tierId: tier.id,
-        })
+        }, { transaction })
       }
     }
   });

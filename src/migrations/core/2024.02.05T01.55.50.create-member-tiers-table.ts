@@ -49,6 +49,6 @@ export const up: Migration = async ({ context: queryInterface }) => {
 export const down: Migration = async ({ context: queryInterface }) => {
   await queryInterface.sequelize.transaction(async (transaction) => {
     await queryInterface.removeIndex('member_tiers', ['loyalty_id', 'member_id'], { transaction });
-    await queryInterface.dropTable('member_tiers');
+    await queryInterface.dropTable('member_tiers', { transaction });
   });
 };
